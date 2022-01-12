@@ -38,25 +38,24 @@ else if(req.url==="/api/users"){
 
 
 }
-else if(req.url==="/greeting-user"){
-  
-     
+else if(url.parse(req.url).pathname==="/greeting-user"){
      const queryObject = url.parse(req.url, true).query;
     res.end(`Hi user ${queryObject.name || 'Unknown user'}`); 
- 
+    return
 }
+
  else {
-   
    res.writeHead(302, {'Location':'http://localhost:8000'});           
- 
 res.end();
 } 
- file.pipe(res);
+if(file){
+    file.pipe(res);
+}
+ 
 };
 
 const server = http.createServer(requestListener);
 server.listen(port, host, () => {
-    console.log(`Server is running on http://${host}:${port}`);
-    
+    console.log(`Server is running on http://${host}:${port}`); 
 });
 
